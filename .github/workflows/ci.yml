@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows-build:
+    name: Windows build
+    runs-on: windows-2025
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Configure MSBuild
+        uses: microsoft/setup-msbuild@30375c66a4eea26614e0d39710365f22f8b0af57 # v3
+        with:
+          vs-version: '[18.0,19.0)'
+
+      - name: Build Debug
+        run: msbuild allyouneed_bongocat.slnx /m /restore /p:Configuration=Debug /p:Platform=x64
+
+      - name: Build Release with static analysis
+        run: msbuild allyouneed_bongocat.slnx /m /restore /p:Configuration=Release /p:Platform=x64 /p:RunCodeAnalysis=true /p:EnableCppCoreCheck=true
+

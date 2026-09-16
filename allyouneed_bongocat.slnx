@@ -2,7 +2,22 @@
   <Configurations>
     <Platform Name="ARM64" />
     <Platform Name="x64" />
-    <Platform Name="x86" />
   </Configurations>
-  <Project Path="allyouneed_bongocat/allyouneed_bongocat.vcxproj" />
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="README.md" />
+    <File Path="vcpkg.json" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/">
+    <File Path=".github/copilot-instructions.md" />
+    <File Path=".github/instructions/core.instructions.md" />
+    <File Path=".github/instructions/win32.instructions.md" />
+  </Folder>
+  <Folder Name="/Solution Items/docs/">
+    <File Path="docs/ARCHITECTURE.md" />
+    <File Path="docs/COPILOT_GUIDE.md" />
+    <File Path="docs/SPEC.md" />
+  </Folder>
+  <Project Path="windows/BongoCat/BongoCat.vcxproj" Id="645a18de-b468-4583-8c04-d97832324633" />
+  <Project Path="windows/BongoCore/BongoCore.vcxproj" Id="2ad62432-c6c5-4699-a7c8-ec37a2a392f4" />
 </Solution>

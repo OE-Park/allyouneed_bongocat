@@ -33,9 +33,18 @@ namespace
                 text.push_back(static_cast<wchar_t>(c));
             }
             RECT rc{};
-            GetClientRect(hwnd, &rc);
-            DrawTextW(hdc, text.c_str(), -1, &rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-            EndPaint(hwnd, &ps);
+            if (!GetClientRect(hwnd, &rc))
+            {
+                LOG_LAST_ERROR();
+            }
+            else if (DrawTextW(hdc, text.c_str(), -1, &rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE) == 0)
+            {
+                LOG_LAST_ERROR();
+            }
+            if (!EndPaint(hwnd, &ps))
+            {
+                LOG_LAST_ERROR();
+            }
             return 0;
         }
         case WM_DESTROY:

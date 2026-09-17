@@ -8,6 +8,7 @@
     <VcpkgEnableManifest>true</VcpkgEnableManifest>
     <VcpkgManifestRoot>$(RepoRoot)</VcpkgManifestRoot>
     <VcpkgUseStatic>true</VcpkgUseStatic>
+    <VcpkgUseMD>false</VcpkgUseMD>
     <VcpkgBuildsystemsPath Condition="'$(VcpkgBuildsystemsPath)' == '' and '$(VcpkgRoot)' != ''">$([System.IO.Path]::Combine('$(VcpkgRoot)', 'scripts\buildsystems\msbuild'))</VcpkgBuildsystemsPath>
     <VcpkgBuildsystemsPath Condition="'$(VcpkgBuildsystemsPath)' == ''">$(VSInstallDir)VC\vcpkg\scripts\buildsystems\msbuild</VcpkgBuildsystemsPath>
     <VcpkgPropsPath Condition="'$(VcpkgPropsPath)' == ''">$(VcpkgBuildsystemsPath)\vcpkg.props</VcpkgPropsPath>

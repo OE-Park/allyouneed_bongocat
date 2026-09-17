@@ -6,6 +6,7 @@
     <OutDir>$(RepoRoot)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(RepoRoot)obj\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
     <VcpkgEnableManifest>true</VcpkgEnableManifest>
+    <VcpkgManifestRoot>$(RepoRoot)</VcpkgManifestRoot>
     <VcpkgUseStatic>true</VcpkgUseStatic>
     <VcpkgTargetsPath Condition="'$(VcpkgTargetsPath)' == '' and '$(VcpkgRoot)' != ''">$([System.IO.Path]::Combine('$(VcpkgRoot)', 'scripts\buildsystems\msbuild\vcpkg.targets'))</VcpkgTargetsPath>
     <VcpkgTargetsPath Condition="'$(VcpkgTargetsPath)' == ''">$(VSInstallDir)VC\vcpkg\scripts\buildsystems\msbuild\vcpkg.targets</VcpkgTargetsPath>

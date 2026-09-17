@@ -51,7 +51,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR, _
     wc.hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_APP));
     wc.hIconSm = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_SMALL));
     wc.hCursor = LoadCursorW(nullptr, IDC_ARROW);
-    wc.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
+    wc.hbrBackground = GetSysColorBrush(COLOR_WINDOW);
     wc.lpszClassName = kWindowClass;
     if (!RegisterClassExW(&wc))
     {

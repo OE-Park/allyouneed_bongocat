@@ -8,9 +8,12 @@
     <VcpkgEnableManifest>true</VcpkgEnableManifest>
     <VcpkgManifestRoot>$(RepoRoot)</VcpkgManifestRoot>
     <VcpkgUseStatic>true</VcpkgUseStatic>
-    <VcpkgTargetsPath Condition="'$(VcpkgTargetsPath)' == '' and '$(VcpkgRoot)' != ''">$([System.IO.Path]::Combine('$(VcpkgRoot)', 'scripts\buildsystems\msbuild\vcpkg.targets'))</VcpkgTargetsPath>
-    <VcpkgTargetsPath Condition="'$(VcpkgTargetsPath)' == ''">$(VSInstallDir)VC\vcpkg\scripts\buildsystems\msbuild\vcpkg.targets</VcpkgTargetsPath>
+    <VcpkgBuildsystemsPath Condition="'$(VcpkgBuildsystemsPath)' == '' and '$(VcpkgRoot)' != ''">$([System.IO.Path]::Combine('$(VcpkgRoot)', 'scripts\buildsystems\msbuild'))</VcpkgBuildsystemsPath>
+    <VcpkgBuildsystemsPath Condition="'$(VcpkgBuildsystemsPath)' == ''">$(VSInstallDir)VC\vcpkg\scripts\buildsystems\msbuild</VcpkgBuildsystemsPath>
+    <VcpkgPropsPath Condition="'$(VcpkgPropsPath)' == ''">$(VcpkgBuildsystemsPath)\vcpkg.props</VcpkgPropsPath>
+    <VcpkgTargetsPath Condition="'$(VcpkgTargetsPath)' == ''">$(VcpkgBuildsystemsPath)\vcpkg.targets</VcpkgTargetsPath>
   </PropertyGroup>
+  <Import Project="$(VcpkgPropsPath)" Condition="Exists('$(VcpkgPropsPath)')" />
   <ItemDefinitionGroup>
     <ClCompile>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -54,8 +57,8 @@
       <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
     </Lib>
   </ItemDefinitionGroup>
-  <Import Project="$(VcpkgTargetsPath)" Condition="'$(VcpkgPropsImported)' != 'true' and Exists('$(VcpkgTargetsPath)')" />
-  <Target Name="BongoValidateVcpkgIntegration" BeforeTargets="PrepareForBuild" Condition="'$(VcpkgPropsImported)' != 'true'">
-    <Error Text="vcpkg MSBuild integration was not found. Install the Visual Studio vcpkg component or set VcpkgTargetsPath." />
+  <Target Name="BongoValidateVcpkgIntegration" BeforeTargets="PrepareForBuild">
+    <Error Condition="!Exists('$(VcpkgPropsPath)')" Text="vcpkg.props was not found. Install the Visual Studio vcpkg component or set VcpkgRoot/VcpkgBuildsystemsPath." />
+    <Error Condition="!Exists('$(VcpkgTargetsPath)')" Text="vcpkg.targets was not found. Install the Visual Studio vcpkg component or set VcpkgRoot/VcpkgBuildsystemsPath." />
   </Target>
 </Project>

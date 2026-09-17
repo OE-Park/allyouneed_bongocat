@@ -41,5 +41,7 @@
     <ClCompile Include="..\..\core\BongoCore.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VcpkgTargetsPath)" Condition="Exists('$(VcpkgTargetsPath)')" />
+  </ImportGroup>
 </Project>

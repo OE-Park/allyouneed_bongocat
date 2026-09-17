@@ -1,4 +1,4 @@
-<Solution>
+﻿<Solution>
   <Configurations>
     <Platform Name="ARM64" />
     <Platform Name="x64" />
@@ -20,4 +20,5 @@
   </Folder>
   <Project Path="windows/BongoCat/BongoCat.vcxproj" Id="645a18de-b468-4583-8c04-d97832324633" />
   <Project Path="windows/BongoCore/BongoCore.vcxproj" Id="2ad62432-c6c5-4699-a7c8-ec37a2a392f4" />
+  <Project Path="windows/BongoCoreTests/BongoCoreTests.vcxproj" Id="c0a5a4b7-2be7-4b80-8f14-0c8ddcb1b5f0" />
 </Solution>

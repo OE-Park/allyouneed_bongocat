@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="core">
@@ -7,8 +7,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\core\BongoCore.h"><Filter>core</Filter></ClInclude>
+    <ClInclude Include="..\..\core\BongoEngine.h"><Filter>core</Filter></ClInclude>
+    <ClInclude Include="..\..\core\ComboTracker.h"><Filter>core</Filter></ClInclude>
+    <ClInclude Include="..\..\core\Constants.h"><Filter>core</Filter></ClInclude>
+    <ClInclude Include="..\..\core\Interfaces.h"><Filter>core</Filter></ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\core\BongoCore.cpp"><Filter>core</Filter></ClCompile>
+    <ClCompile Include="..\..\core\BongoEngine.cpp"><Filter>core</Filter></ClCompile>
+    <ClCompile Include="..\..\core\ComboTracker.cpp"><Filter>core</Filter></ClCompile>
   </ItemGroup>
 </Project>

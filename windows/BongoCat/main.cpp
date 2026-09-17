@@ -3,25 +3,15 @@
 #include <windows.h>
 #include <string>
 #include <wil/resource.h>
+#include <wil/result.h>
 
 #include "BongoCore.h"
+#include "MessageLoop.h"
 #include "resource.h"
 
 namespace
 {
     constexpr wchar_t kWindowClass[] = L"BongoCatNativeWindow";
-
-    // Display only: shows which build (x64 / ARM64) is running. No logic depends on it.
-    const wchar_t* ArchName() noexcept
-    {
-#if defined(_M_ARM64)
-        return L"ARM64";
-#elif defined(_M_X64)
-        return L"x64";
-#else
-        return L"unknown";
-#endif
-    }
 
     LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     {
@@ -37,9 +27,6 @@ namespace
             {
                 text.push_back(static_cast<wchar_t>(c));
             }
-            text += L" (";
-            text += ArchName();
-            text += L")";
             RECT rc{};
             GetClientRect(hwnd, &rc);
             DrawTextW(hdc, text.c_str(), -1, &rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
@@ -68,6 +55,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR, _
     wc.lpszClassName = kWindowClass;
     if (!RegisterClassExW(&wc))
     {
+        LOG_LAST_ERROR();
         return 1;
     }
 
@@ -76,16 +64,26 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR, _
                                 nullptr, nullptr, hInstance, nullptr);
     if (!hwnd)
     {
+        LOG_LAST_ERROR();
         return 1;
     }
     ShowWindow(hwnd, nCmdShow);
     UpdateWindow(hwnd);
 
     MSG msg{};
-    while (GetMessageW(&msg, nullptr, 0, 0) > 0)
+    while (true)
     {
-        TranslateMessage(&msg);
-        DispatchMessageW(&msg);
+        switch (bongo::win32::ClassifyGetMessageResult(GetMessageW(&msg, nullptr, 0, 0)))
+        {
+        case bongo::win32::MessageResult::error:
+            LOG_LAST_ERROR();
+            return 1;
+        case bongo::win32::MessageResult::quit:
+            return static_cast<int>(msg.wParam);
+        case bongo::win32::MessageResult::dispatch:
+            TranslateMessage(&msg);
+            DispatchMessageW(&msg);
+            break;
+        }
     }
-    return static_cast<int>(msg.wParam);
 }

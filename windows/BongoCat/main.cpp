@@ -21,6 +21,11 @@ namespace
         {
             PAINTSTRUCT ps{};
             HDC hdc = BeginPaint(hwnd, &ps);
+            if (!hdc)
+            {
+                LOG_LAST_ERROR();
+                return 0;
+            }
             const std::string_view ver = bongo::Version();
             std::wstring text = L"BongoCat Native ";
             for (char c : ver)

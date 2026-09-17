@@ -26,7 +26,7 @@ msbuild allyouneed_bongocat.slnx -m -p:Configuration=Release -p:Platform=x64
 
 - 결과: `bin\<Platform>\Release\BongoCat.exe`
 
-PR에서는 Debug·Release x64 빌드를 실행하며, Release 빌드에는 Microsoft C++ Code Analysis와 C++ Core Check가 포함됩니다.
+PR에서는 x64·ARM64의 Debug·Release 빌드를 실행합니다. Microsoft C++ Code Analysis와 C++ Core Check는 x64 Release 빌드에서 실행합니다.
 
 ## 개발
 

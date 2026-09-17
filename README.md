@@ -14,7 +14,8 @@
 
 ## 빌드 (Windows)
 
-- 요구 사항: Windows 10 이상, Visual Studio 2026의 **C++를 사용한 데스크톱 개발** 워크로드, Windows 10/11 SDK
+- 요구 사항: Windows 10 이상, Visual Studio 2026의 **C++를 사용한 데스크톱 개발** 워크로드, Windows 10/11 SDK, **C++용 vcpkg 패키지 관리자** 구성 요소
+- Visual Studio의 vcpkg 구성 요소를 사용하지 않으면 `VcpkgTargetsPath`에 `vcpkg.targets` 절대경로를 지정
 - `allyouneed_bongocat.slnx` 를 Visual Studio로 열기
 - 또는 Developer PowerShell:
 

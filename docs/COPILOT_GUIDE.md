@@ -23,10 +23,12 @@ docs/
 - **Copilot 설정** (도구 > 옵션 > GitHub > Copilot > Copilot Chat)
   - ✅ *Enable custom instructions to be loaded from .github/copilot-instructions.md files and added to requests*
   - ✅ *Enable Agent mode in the chat pane* (17.14 이상)
-- **폴더 준비** (이미 완료)
+- **폴더 준비**
   - 루트의 `allyouneed_bongocat.slnx` 를 VS에서 열기 — 솔루션은 루트에서 옮기지 않기
-  - `assets/skins/default/` 에 `cat-rest.png`, `cat-left.png`, `cat-right.png` 준비
-    - 원본 저장소 README는 MIT라고 하지만 LICENSE 파일이 없음 → 원본 이미지를 그대로 쓰기 전에 확인
+  - 솔루션·프로젝트 폴더는 준비 완료
+  - 03 창 단계 전에 `assets/skins/default/` 에 200×126 `cat-rest.png`, `cat-left.png`, `cat-right.png`와 `skin.json` 준비
+    - 자체 제작 자산이나 재배포가 명시적으로 허용된 자산만 사용하고 출처·라이선스를 기록
+    - 원본 저장소는 LICENSE 파일이 없으므로 재배포 권한 확인 전까지 원본 이미지를 사용하지 않기
 - **처음 한 번**: 솔루션을 x64·ARM64로 각각 빌드해 빈 창이 뜨는지 확인
 
 ## 3. 진행 방법

@@ -49,8 +49,23 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR, _
     wc.lpfnWndProc = WndProc;
     wc.hInstance = hInstance;
     wc.hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_APP));
+    if (!wc.hIcon)
+    {
+        LOG_LAST_ERROR();
+        return 1;
+    }
     wc.hIconSm = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_SMALL));
+    if (!wc.hIconSm)
+    {
+        LOG_LAST_ERROR();
+        return 1;
+    }
     wc.hCursor = LoadCursorW(nullptr, IDC_ARROW);
+    if (!wc.hCursor)
+    {
+        LOG_LAST_ERROR();
+        return 1;
+    }
     wc.hbrBackground = GetSysColorBrush(COLOR_WINDOW);
     wc.lpszClassName = kWindowClass;
     if (!RegisterClassExW(&wc))

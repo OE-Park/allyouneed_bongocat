@@ -39,3 +39,11 @@ jobs:
       - name: Build Release with static analysis
         run: msbuild allyouneed_bongocat.slnx /m /restore /p:Configuration=Release /p:Platform=x64 /p:RunCodeAnalysis=true /p:EnableCppCoreCheck=true
 
+      - name: Build ARM64 Debug
+        run: msbuild allyouneed_bongocat.slnx /m /restore /p:Configuration=Debug /p:Platform=ARM64
+
+      - name: Build ARM64 Release
+        run: msbuild allyouneed_bongocat.slnx /m /restore /p:Configuration=Release /p:Platform=ARM64
+
+      - name: Run x64 core tests
+        run: vstest.console.exe bin\x64\Release\BongoCoreTests.dll

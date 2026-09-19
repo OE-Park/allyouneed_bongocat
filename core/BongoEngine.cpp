@@ -2,17 +2,27 @@
 
 namespace bongo
 {
-    BongoEngine::BongoEngine(const Config config) noexcept
-        : config_(config)
+    BongoEngine::BongoEngine(IClock& clock, const Config config) noexcept
+        : clock_(clock),
+          config_(config)
     {
+        if (config_.max_slaps < 0)
+        {
+            config_.max_slaps = 0;
+        }
+        if (config_.slaps < 0)
+        {
+            config_.slaps = 0;
+        }
         if (config_.max_slaps > 0 && config_.slaps > config_.max_slaps)
         {
             config_.slaps = config_.max_slaps;
         }
     }
 
-    SlapResult BongoEngine::OnInput(const TimePoint now) noexcept
+    SlapResult BongoEngine::OnInput() noexcept
     {
+        const TimePoint now = clock_.Now();
         SlapResult result{};
         result.pose = pose_;
         result.slaps = config_.slaps;
@@ -46,13 +56,13 @@ namespace bongo
         return result;
     }
 
-    bool BongoEngine::Tick(const TimePoint now) noexcept
+    bool BongoEngine::Tick() noexcept
     {
         if (!has_active_pose_)
         {
             return false;
         }
-        if (now < pose_deadline_)
+        if (clock_.Now() < pose_deadline_)
         {
             return true;
         }

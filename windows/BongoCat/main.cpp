@@ -1,4 +1,4 @@
-// BongoCat Native - Win32 shell entry point (skeleton).
+﻿// BongoCat Native - Win32 shell entry point (skeleton).
 // Step 03 replaces this plain window with the layered cat window.
 #include <windows.h>
 #include <string>
@@ -97,7 +97,11 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR, _
         return 1;
     }
     ShowWindow(hwnd, nCmdShow);
-    UpdateWindow(hwnd);
+    if (!UpdateWindow(hwnd))
+    {
+        LOG_LAST_ERROR();
+        return 1;
+    }
 
     MSG msg{};
     while (true)

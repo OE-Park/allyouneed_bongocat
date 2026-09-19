@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "ComboTracker.h"
+#include "Interfaces.h"
 
 namespace bongo
 {
@@ -36,10 +37,10 @@ namespace bongo
             int slaps{0};
         };
 
-        explicit BongoEngine(Config config = {}) noexcept;
+        explicit BongoEngine(IClock& clock, Config config = {}) noexcept;
 
-        SlapResult OnInput(TimePoint now) noexcept;
-        bool Tick(TimePoint now) noexcept;
+        SlapResult OnInput() noexcept;
+        bool Tick() noexcept;
         void SetPaused(bool paused) noexcept;
         void Reset() noexcept;
         [[nodiscard]] bool IsPaused() const noexcept;
@@ -47,6 +48,7 @@ namespace bongo
         [[nodiscard]] int Slaps() const noexcept;
 
     private:
+        IClock& clock_;
         Config config_{};
         ComboTracker combo_{};
         Pose pose_{Pose::idle};

@@ -1,5 +1,6 @@
 ﻿#include "CppUnitTest.h"
 
+#include "BongoCore.h"
 #include "BongoEngine.h"
 #include "ComboTracker.h"
 
@@ -157,12 +158,35 @@ namespace BongoCoreTests
             }
             Assert::AreEqual(static_cast<int>(bongo::SoundId::combo), static_cast<int>(result.sound));
 
-            for (int i = 10; i < 50; ++i)
+            for (int i = 10; i < 25; ++i)
+            {
+                result = engine.OnInput();
+                clock.Advance(std::chrono::milliseconds(100));
+            }
+            Assert::AreEqual(static_cast<int>(bongo::SoundId::combo), static_cast<int>(result.sound));
+
+            for (int i = 25; i < 50; ++i)
             {
                 result = engine.OnInput();
                 clock.Advance(std::chrono::milliseconds(100));
             }
             Assert::AreEqual(static_cast<int>(bongo::SoundId::combo_high), static_cast<int>(result.sound));
+
+            for (int i = 50; i < 100; ++i)
+            {
+                result = engine.OnInput();
+                clock.Advance(std::chrono::milliseconds(100));
+            }
+            Assert::AreEqual(static_cast<int>(bongo::SoundId::combo_high), static_cast<int>(result.sound));
+        }
+    };
+
+    TEST_CLASS(BongoCoreApiTests)
+    {
+    public:
+        TEST_METHOD(VersionReturnsCurrentCoreVersion)
+        {
+            Assert::AreEqual("0.1.0", bongo::Version().data());
         }
     };
 }

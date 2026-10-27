@@ -97,11 +97,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPWSTR, _
         return 1;
     }
     ShowWindow(hwnd, nCmdShow);
-    if (!UpdateWindow(hwnd))
-    {
-        LOG_LAST_ERROR();
-        return 1;
-    }
+    UpdateWindow(hwnd);
 
     MSG msg{};
     while (true)

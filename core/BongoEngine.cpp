@@ -38,7 +38,8 @@ namespace bongo
             ++config_.slaps;
         }
 
-        pose_ = pose_ == Pose::left ? Pose::right : Pose::left;
+        pose_ = next_pose_;
+        next_pose_ = next_pose_ == Pose::left ? Pose::right : Pose::left;
         pose_deadline_ = now + SlapResetDelay;
         has_active_pose_ = true;
         result.accepted = true;
@@ -87,6 +88,7 @@ namespace bongo
         config_.slaps = 0;
         combo_.Reset();
         pose_ = Pose::idle;
+        next_pose_ = Pose::left;
         pose_deadline_ = {};
         has_active_pose_ = false;
     }

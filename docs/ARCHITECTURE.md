@@ -11,16 +11,19 @@
 └───────────────────────┬─────────────────────────────┘   └───────────┬────────────┘
                         │  인터페이스 호출 / 이벤트 구조체              │
 ┌───────────────────────┴──────────── core (C++20, OS 무관) ───────┴────────────┐
-│ BongoEngine: OnInput() → SlapResult, Tick(now) → 애니메이션 상태                   │
+│ BongoEngine: OnInput() → SlapResult, Tick() → 애니메이션 상태                      │
 │ ComboTracker · AchievementManager · Config(INI) · SkinManifest · Constants         │
 └────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## 핵심 흐름
-1. `WM_INPUT` → `RawInputSource`가 "새 down 엣지"만 걸러 `engine.OnInput(now)` 호출
+1. `WM_INPUT` → `RawInputSource`가 "새 down 엣지"만 걸러 `engine.OnInput()` 호출
 2. `SlapResult` 수신 → 포즈 이미지 교체, 100 ms 복귀 타이머, 사운드, 플로팅 텍스트/콤보 애니메이션 시작
 3. 애니메이션 타이머(≈60 fps)는 **활성 애니메이션이 있을 때만** 동작 → 모두 끝나면 정지
 4. 슬랩 수 변경 → 2 s 디바운스 저장 타이머
+
+`BongoEngine`은 생성자에서 `IClock&`를 주입받는다. 호출자는 시간을 인자로 전달하지 않으며,
+엔진이 입력 처리와 틱 처리 시 같은 시계를 읽는다. 테스트에서는 가짜 시계를 주입한다.
 
 ## 파일 구성(목표)
 ```

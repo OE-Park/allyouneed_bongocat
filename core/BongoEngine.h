@@ -52,6 +52,7 @@ namespace bongo
         Config config_{};
         ComboTracker combo_{};
         Pose pose_{Pose::idle};
+        Pose next_pose_{Pose::left};
         TimePoint pose_deadline_{};
         bool has_active_pose_{false};
         bool paused_{false};

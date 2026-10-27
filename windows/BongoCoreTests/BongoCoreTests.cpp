@@ -94,6 +94,20 @@ namespace BongoCoreTests
             Assert::AreEqual(static_cast<int>(bongo::Pose::idle), static_cast<int>(engine.CurrentPose()));
         }
 
+        TEST_METHOD(SlapsContinueAlternatingAfterReturningToIdle)
+        {
+            FakeClock clock;
+            bongo::BongoEngine engine(clock);
+            const auto first = engine.OnInput();
+            clock.Advance(bongo::SlapResetDelay);
+            Assert::IsFalse(engine.Tick());
+
+            const auto second = engine.OnInput();
+
+            Assert::AreEqual(static_cast<int>(bongo::Pose::left), static_cast<int>(first.pose));
+            Assert::AreEqual(static_cast<int>(bongo::Pose::right), static_cast<int>(second.pose));
+        }
+
         TEST_METHOD(MaxSlapsCapsCounter)
         {
             FakeClock clock;
@@ -115,6 +129,16 @@ namespace BongoCoreTests
             const auto result = engine.OnInput();
 
             Assert::IsTrue(result.accepted);
+            Assert::AreEqual(1, result.slaps);
+        }
+
+        TEST_METHOD(NegativePersistedSlapsStartsFromZero)
+        {
+            FakeClock clock;
+            bongo::BongoEngine engine(clock, {0, -1});
+
+            Assert::AreEqual(0, engine.Slaps());
+            const auto result = engine.OnInput();
             Assert::AreEqual(1, result.slaps);
         }
 
@@ -144,6 +168,18 @@ namespace BongoCoreTests
             Assert::AreEqual(0, engine.Slaps());
             Assert::AreEqual(static_cast<int>(bongo::Pose::idle), static_cast<int>(engine.CurrentPose()));
             Assert::IsTrue(engine.IsPaused());
+        }
+
+        TEST_METHOD(ResetRestartsPoseAlternation)
+        {
+            FakeClock clock;
+            bongo::BongoEngine engine(clock);
+            engine.OnInput();
+
+            engine.Reset();
+            const auto result = engine.OnInput();
+
+            Assert::AreEqual(static_cast<int>(bongo::Pose::left), static_cast<int>(result.pose));
         }
 
         TEST_METHOD(ComboMilestonesReturnSounds)

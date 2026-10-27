@@ -1,0 +1,10 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "allyouneed-bongocat",
+  "version-string": "0.1.0",
+  "builtin-baseline": "a97c98d785fc0b1710bc711acf47767b756e6b7c",
+  "dependencies": [
+    "nlohmann-json",
+    "wil"
+  ]
+}

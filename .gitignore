@@ -361,3 +361,13 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# --- allyouneed_bongocat ---
+/bin/
+/obj/
+vcpkg_installed/
+
+# Xcode (macos/)
+xcuserdata/
+DerivedData/
+*.xcuserstate
+.DS_Store

@@ -1,42 +1,48 @@
 # allyouneed_bongocat
 
-Windows desktop application built with C++20 and the Win32 API.
+[bongo cat](https://github.com/luinbytes/bongocat)을 적은 메모리로 상주하는 네이티브 앱으로 다시 만드는 프로젝트입니다.
 
-## Development
+## 폴더
+| 폴더 | 용도 | 도구 |
+|---|---|---|
+| `core/` | 공통 C++20 로직 (OS 무관) | 공용 |
+| `windows/` | Win32 앱 (x64 / ARM64) | Visual Studio Community |
+| `macos/` | AppKit 앱 (arm64 / x86_64) | Xcode (예정) |
+| `assets/` | 스킨·사운드 | 공용 |
+| `docs/` | 명세·구조·Copilot 가이드 | — |
+| `.github/` | Copilot 지침·프롬프트 | — |
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for pull request and English commit
-message conventions.
+## 빌드 (Windows)
 
-### Windows
-
-Requirements:
-
-- Windows 10 or later
-- Visual Studio 2026 with the **Desktop development with C++** workload
-- Windows 10/11 SDK
-
-Build from a Developer PowerShell:
+- 요구 사항: Windows 10 이상, Visual Studio 2026의 **C++를 사용한 데스크톱 개발** 워크로드, Windows 10/11 SDK, **C++용 vcpkg 패키지 관리자** 구성 요소
+- Visual Studio의 vcpkg 구성 요소를 사용하지 않으면 `VcpkgRoot` 또는 `VcpkgBuildsystemsPath`를 지정
+- `allyouneed_bongocat.slnx` 를 Visual Studio로 열기
+- 또는 Developer PowerShell:
 
 ```powershell
-msbuild allyouneed_bongocat.slnx /m /restore /p:Configuration=Debug /p:Platform=x64
+msbuild allyouneed_bongocat.slnx -m -p:Configuration=Release -p:Platform=ARM64
+msbuild allyouneed_bongocat.slnx -m -p:Configuration=Release -p:Platform=x64
 ```
 
-Pull requests run Debug and Release x64 builds. The Release build also runs
-Microsoft C++ Code Analysis and C++ Core Check.
+- 결과: `bin\<Platform>\Release\BongoCat.exe`
 
-### macOS
+PR에서는 x64·ARM64의 Debug·Release 빌드를 실행합니다. Microsoft C++ Code Analysis와 C++ Core Check는 x64 Release 빌드에서 실행합니다.
 
-The current application uses Win32 APIs and cannot be built on macOS. New
-platform-independent behavior should be isolated from the Win32 entry point so
-it can be tested and reused by a future native macOS target. A macOS CI build
-must be added when an Xcode, CMake, or other macOS target is introduced.
+## 개발
 
-## Repository safeguards
+- PR·영문 커밋 규칙: [CONTRIBUTING.md](CONTRIBUTING.md)
+- `master` 변경은 PR과 필수 CI·Dependency review·CodeQL 검사를 거칩니다.
+- 리뷰 대화를 해결한 뒤 squash merge합니다.
+- Copilot 코드 리뷰는 PR 생성과 후속 push마다 자동 요청됩니다.
+- Dependabot은 GitHub Actions 버전을 매주 확인합니다.
+- Secret scanning과 push protection을 사용합니다.
 
-- Changes to `master` must go through a pull request.
-- CI, dependency review, CodeQL, resolved review threads, and an approving
-  review are required before squash merge.
-- Copilot code review is requested automatically for new pull requests and
-  every subsequent push.
-- Dependabot checks GitHub Actions versions weekly.
-- Secret scanning and push protection are enabled.
+## macOS
+
+현재 앱은 Win32 API를 사용하므로 macOS에서 빌드할 수 없습니다. 플랫폼 독립 로직은 `core/`에 분리하고, macOS 네이티브 타깃이 추가되면 macOS CI도 함께 추가합니다.
+
+## 문서
+
+- [기능 명세](docs/SPEC.md)
+- [아키텍처](docs/ARCHITECTURE.md)
+- [Copilot 작업 가이드](docs/COPILOT_GUIDE.md)
